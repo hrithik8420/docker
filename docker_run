@@ -1,0 +1,62 @@
+Docker Run Command - Easy to Understand
+
+Command Syntax:
+
+docker run \[OPTIONS] IMAGE \[COMMAND] \[ARG...]
+
+Explanation:
+
+* docker run: Start a new container from an image.
+* IMAGE: The image to use. If you don’t add a tag, Docker uses 'latest' by default.
+* COMMAND \[ARG...]: Optional command to run inside the container instead of the default.
+
+Common Options (Simple Version):
+
+1. -d, --detach
+
+   * Run container in the background.
+   * Example: docker run -d myapp\:latest
+
+2. -p, --publish \<host\_port>:\<container\_port>
+
+   * Link a container port to a port on your computer.
+   * Example: docker run -p 8080:80 myapp\:latest
+
+3. \--name \<container\_name>
+
+   * Give your container a name.
+   * Example: docker run --name mycontainer myapp\:latest
+
+4. -e, --env <key>=<value>
+
+   * Set environment variables in the container.
+   * Example: docker run -e ENV=production myapp\:latest
+
+5. -v, --volume \<host\_path>:\<container\_path>
+
+   * Share a folder between your computer and the container.
+   * Example: docker run -v \$(pwd):/app myapp\:latest
+
+6. \--rm
+
+   * Remove the container automatically after it stops.
+   * Example: docker run --rm myapp\:latest
+
+7. -it
+
+   * Run container interactively with a terminal.
+   * Example: docker run -it myapp\:latest /bin/bash
+
+8. \--network <mode>
+
+   * Connect container to a network.
+   * Example: docker run --network host myapp\:latest
+
+9. \--restart <policy>
+
+   * Decide when to restart the container automatically.
+   * Example: docker run --restart always myapp\:latest
+
+Example Full Command:
+
+docker run -d -p 8080:80 --name mycontainer -v \$(pwd):/app -e ENV=production myapp\:latest
