@@ -1,4 +1,4 @@
-Docker Push Image to Docker Hub
+Docker Push, Pull, and Run Image from Docker Hub
 
 ### **Step 1: Login to Docker Hub**
 
@@ -7,9 +7,9 @@ docker login
 ```
 
 * Enter your Docker Hub username and password.
-* Successful login allows you to push images.
+* Successful login allows you to push, pull, and run images.
 
-### **Step 2: Tag your image**
+### **Step 2: Tag your image for Docker Hub**
 
 Docker Hub requires the image name to include your username.
 
@@ -35,20 +35,54 @@ docker push <dockerhub_username>/<repository_name>:<tag>
 docker push hri123/myapp:latest
 ```
 
-* The image will be uploaded to your Docker Hub repository.
-
-### **Step 4: Verify**
-
-* Check on Docker Hub web interface under your repositories.
-* Or list images locally:
+### **Step 4: Pull image from Docker Hub**
 
 ```bash
-docker images
+docker pull <dockerhub_username>/<repository_name>:<tag>
 ```
+
+* Example:
+
+```bash
+docker pull hri123/myapp:latest
+```
+
+### **Step 5: Run the Pulled Image**
+
+```bash
+docker run [OPTIONS] <dockerhub_username>/<repository_name>:<tag>
+```
+
+* Example (simple run):
+
+```bash
+docker run hri123/myapp:latest
+```
+
+* Example (run with port mapping and detached mode):
+
+```bash
+docker run -d -p 8080:80 hri123/myapp:latest
+```
+
+* Options you can use:
+
+  * `-d` → run in background (detached)
+  * `-p host_port:container_port` → map ports
+  * `--name <container_name>` → name your container
+  * `-v host_path:container_path` → mount volumes
+
+### **Step 6: Verify Running Container**
+
+```bash
+docker ps
+```
+
+* Lists all running containers.
 
 ### **Tips:**
 
-* Always tag images with meaningful names and versions.
-* Use `latest` tag for the most recent build.
-* Ensure you are logged in before pushing.
-* Private repositories require Docker Hub account with permissions.
+* Always use the full repository name including your Docker Hub username.
+* Use `latest` tag for the most recent build if no specific version is needed.
+* Ensure ports are free on your host when mapping.
+* You can stop and remove containers using `docker stop` and `docker rm`.
