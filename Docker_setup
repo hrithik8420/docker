@@ -1,0 +1,13 @@
+sudo apt-get update
+
+sudo apt-get install docker.io
+
+Systemctl startus docker
+
+docker --version
+
+Usermod -aG docker $USER
+
+Newgrp docker
+
+Docker ps
