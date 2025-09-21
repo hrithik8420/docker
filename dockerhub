@@ -1,0 +1,54 @@
+Docker Push Image to Docker Hub
+
+### **Step 1: Login to Docker Hub**
+
+```bash
+docker login
+```
+
+* Enter your Docker Hub username and password.
+* Successful login allows you to push images.
+
+### **Step 2: Tag your image**
+
+Docker Hub requires the image name to include your username.
+
+```bash
+docker tag <local_image_name>:<tag> <dockerhub_username>/<repository_name>:<tag>
+```
+
+* Example:
+
+```bash
+docker tag myapp:latest hri123/myapp:latest
+```
+
+### **Step 3: Push image to Docker Hub**
+
+```bash
+docker push <dockerhub_username>/<repository_name>:<tag>
+```
+
+* Example:
+
+```bash
+docker push hri123/myapp:latest
+```
+
+* The image will be uploaded to your Docker Hub repository.
+
+### **Step 4: Verify**
+
+* Check on Docker Hub web interface under your repositories.
+* Or list images locally:
+
+```bash
+docker images
+```
+
+### **Tips:**
+
+* Always tag images with meaningful names and versions.
+* Use `latest` tag for the most recent build.
+* Ensure you are logged in before pushing.
+* Private repositories require Docker Hub account with permissions.
