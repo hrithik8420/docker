@@ -1,0 +1,62 @@
+Docker Build Command with Options
+
+Command Syntax:
+
+docker build \[OPTIONS] PATH | URL | -
+
+Explanation:
+
+* docker build: Command used to build a Docker image from a Dockerfile.
+* PATH | URL | - : Location of the build context. Usually the current directory is specified with '.'
+
+Common Options:
+
+1. -t, --tag [name\:tag](name:tag)
+
+   * Assign a name and optionally a tag to the image.
+   * Example: docker build -t myapp:1.0 .
+   * If tag is not provided, it defaults to 'latest'. This means the image can be referenced simply by its name without specifying a version.
+
+2. -f, --file <file>
+
+   * Specify an alternate Dockerfile name or path.
+   * Example: docker build -f Dockerfile.dev -t myapp\:dev .
+
+3. \--no-cache
+
+   * Do not use cached layers when building the image.
+   * Example: docker build --no-cache -t myapp:1.0 .
+
+4. \--pull
+
+   * Always attempt to pull a newer version of the base image.
+   * Example: docker build --pull -t myapp:1.0 .
+
+5. \--build-arg <key>=<value>
+
+   * Pass build-time variables to the Dockerfile.
+   * Example: docker build --build-arg VERSION=2.0 -t myapp:2.0 .
+
+6. \--quiet, -q
+
+   * Suppress build output and print only image ID on success.
+   * Example: docker build -q -t myapp:1.0 .
+
+7. \--progress <type>
+
+   * Set type of progress output (auto, plain, tty).
+   * Example: docker build --progress=plain -t myapp:1.0 .
+
+8. \--compress
+
+   * Compress the build context using gzip to reduce size.
+   * Example: docker build --compress -t myapp:1.0 .
+
+9. \--network <mode>
+
+   * Set the networking mode for the RUN instructions during build.
+   * Example: docker build --network=host -t myapp:1.0 .
+
+Example Full Command:
+
+docker build -t myapp\:latest -f Dockerfile.dev --no-cache --build-arg VERSION=2.0 .
