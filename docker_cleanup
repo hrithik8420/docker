@@ -1,0 +1,83 @@
+Docker Cleanup - Images and Containers
+
+Docker allows you to delete containers and images to free up space. Here’s a simple guide.
+
+---
+
+### **Delete Containers**
+
+1. Stop a running container:
+
+```bash
+docker stop <container_id_or_name>
+```
+
+2. Remove a container:
+
+```bash
+docker rm <container_id_or_name>
+```
+
+3. Remove all containers (even running ones, forcefully):
+
+```bash
+docker rm -f $(docker ps -aq)
+```
+
+---
+
+### **Delete Images**
+
+1. Remove a specific image:
+
+```bash
+docker rmi <image_id_or_name>
+```
+
+2. Remove all unused images:
+
+```bash
+docker image prune -a
+```
+
+---
+
+### **Clean Up Everything**
+
+* Remove all unused containers, networks, images, and cache:
+
+```bash
+docker system prune -a
+```
+
+---
+
+### **Diagram**
+
+```
+        Docker Host
+        +-------------------+
+        | Containers        |
+        |  running/stopped  |
+        +-------------------+
+        | Images            |
+        |  used/unused      |
+        +-------------------+
+        | Volumes           |
+        +-------------------+
+        | Networks          |
+        +-------------------+
+
+Commands affect:
+- docker stop / docker rm -> Containers
+- docker rmi -> Images
+- docker system prune -> Everything unused
+```
+
+---
+
+**Tips:**
+
+* Always stop containers before deleting.
+* Use `docker ps -a` to see all containers.
+* Use `docker images` to list all images.
