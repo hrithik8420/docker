@@ -1,0 +1,66 @@
+Distroless Images for Production
+
+What are Distroless Images?
+
+-   Minimal Docker images provided by Google (gcr.io/distroless/*).
+-   They only include:
+    -   Application runtime (Python, Node.js, Java, etc.)
+    -   Required system libraries
+    -   Your application code
+-   Excludes package managers, shells, debugging tools.
+
+Why Use in Production?
+
+1.  Security: Reduced attack surface, fewer CVEs.
+2.  Compliance: Easier audits and CIS/DISA benchmark alignment.
+3.  Performance: Smaller images, faster deployments.
+4.  Immutability: No shell prevents manual tampering in production.
+
+Example: Python App
+
+    # Stage 1: Build
+    FROM python:3.12-slim as builder
+    WORKDIR /app
+    COPY requirements.txt .
+    RUN pip install --no-cache-dir -r requirements.txt -t /app/libs
+    COPY . .
+
+    # Stage 2: Distroless runtime
+    FROM gcr.io/distroless/python3.12
+    WORKDIR /app
+    COPY --from=builder /app /app
+    CMD ["app.py"]
+
+Debugging
+
+-   Distroless has no shell by default.
+-   Options:
+    -   Use gcr.io/distroless/python3.12:debug.
+    -   Debug during CI/CD or with builder image.
+
+Best Practices
+
+-   Use multi-stage builds.
+-   Pin runtime versions with digests.
+-   Run as non-root (USER nonroot).
+-   Add health checks (Docker/K8s).
+-   Scan images (trivy, grype, snyk).
+-   Rely on app monitoring/logging, not system tools.
+
+When to Use
+
+-   ✅ Production workloads, Kubernetes microservices, secure
+    environments.
+-   ❌ Development/debugging, apps requiring system tools.
+
+Alternatives
+
+-   Alpine Linux (tiny, includes shell).
+-   Debian/Ubuntu Slim (larger, stable).
+-   Chainguard Images (secure, continuously scanned).
+
+------------------------------------------------------------------------
+
+Recommendation: - CI/CD: Use python:3.12-slim for dev & testing. -
+Production: Use gcr.io/distroless/python3.12. - Keep :debug image
+available for troubleshooting.
